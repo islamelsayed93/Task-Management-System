@@ -1,0 +1,50 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Task Details</h2>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4 class="card-title">{{ task?.taskName }}</h4>
+            <p class="card-text">
+                <strong>Description:</strong> {{ task?.description || 'No description provided' }}
+            </p>
+            <p class="card-text">
+                <strong>Priority:</strong>
+                <span [class]="
+            task?.priority === 'High'
+              ? 'badge bg-danger'
+              : task?.priority === 'Medium'
+              ? 'badge bg-warning text-dark'
+              : 'badge bg-success'
+          ">
+          {{ task?.priority }}
+        </span>
+            </p>
+            <p class="card-text">
+                <strong>Status:</strong>
+                <span [class]="
+            task?.status === 'Completed'
+              ? 'badge bg-success'
+              : task?.status === 'In Progress'
+              ? 'badge bg-info text-dark'
+              : 'badge bg-secondary'
+          ">
+          {{ task?.status }}
+        </span>
+            </p>
+            <p class="card-text">
+                <strong>Assigned To:</strong> {{ task?.assignedTo }}
+            </p>
+            <p class="card-text">
+                <strong>Due Date:</strong> {{ task?.dueDate }}
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button class="btn btn-secondary" (click)="goBack()">Back to Task List</button>
+    </div>
+</div>

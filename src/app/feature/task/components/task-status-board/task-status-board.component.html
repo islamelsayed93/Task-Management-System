@@ -1,0 +1,39 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Task Status Board</h2>
+        </div>
+        <!-- Pending Tasks -->
+        <div class="col-md-4">
+            <h5>Pending</h5>
+            <div cdkDropList class="task-list bg-light p-3 rounded" [cdkDropListData]="pendingTasks" (cdkDropListDropped)="onTaskDrop($event, 'Pending')">
+                <div class="task-card p-2 mb-2 bg-white border rounded" *ngFor="let task of pendingTasks" cdkDrag>
+                    <strong>{{ task.taskName }}</strong>
+                    <p class="mb-0">{{ task.description || 'No description' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- In Progress Tasks -->
+        <div class="col-md-4">
+            <h5>In Progress</h5>
+            <div cdkDropList class="task-list bg-light p-3 rounded" [cdkDropListData]="inProgressTasks" (cdkDropListDropped)="onTaskDrop($event, 'In Progress')">
+                <div class="task-card p-2 mb-2 bg-white border rounded" *ngFor="let task of inProgressTasks" cdkDrag>
+                    <strong>{{ task.taskName }}</strong>
+                    <p class="mb-0">{{ task.description || 'No description' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Completed Tasks -->
+        <div class="col-md-4">
+            <h5>Completed</h5>
+            <div cdkDropList class="task-list bg-light p-3 rounded" [cdkDropListData]="completedTasks" (cdkDropListDropped)="onTaskDrop($event, 'Completed')">
+                <div class="task-card p-2 mb-2 bg-white border rounded" *ngFor="let task of completedTasks" cdkDrag>
+                    <strong>{{ task.taskName }}</strong>
+                    <p class="mb-0">{{ task.description || 'No description' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+.task-list {
+    min-height: 300px;
+    border: 1px dashed #ccc;
+}
+
+.task-card {
+    cursor: grab;
+}
+
+.task-card:active {
+    cursor: grabbing;
+}

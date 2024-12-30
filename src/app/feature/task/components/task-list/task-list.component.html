@@ -1,0 +1,108 @@
+<div class="container mt-4">
+
+    <div class="row mb-3">
+        <app-task-status-board></app-task-status-board>
+    </div>
+
+    <div class="d-flex justify-content-between align-content-center">
+        <div class="">
+            <h2>Task List</h2>
+        </div>
+        <div class="">
+            <button class="btn btn-primary" routerLink="add">
+              Add Task
+            </button>
+        </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="row mb-3">
+        <div class="col-md-6 col-lg-4 mb-2">
+            <input type="text" class="form-control" (input)="applyFilters()" placeholder="Search by name or description" [(ngModel)]="searchTerm" />
+        </div>
+        <div class="col-md-6 col-lg-2 mb-2">
+            <select class="form-select" [(ngModel)]="filterPriority" (change)="applyFilters()">
+        <option value="">All Priorities</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+        </div>
+        <div class="col-md-6 col-lg-2 mb-2">
+            <select class="form-select" [(ngModel)]="filterStatus" (change)="applyFilters()">
+        <option value="">All Statuses</option>
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+      </select>
+        </div>
+        <div class="col-md-6 col-lg-2 mb-2">
+            <select class="form-select" [(ngModel)]="filterAssignedTo" (change)="applyFilters()">
+        <option value="">All Users</option>
+        <option *ngFor="let user of users" [value]="user">{{ user }}</option>
+      </select>
+        </div>
+        <div class="col-md-6 col-lg-2 mb-2">
+            <button class="btn btn-secondary w-100" (click)="resetFilters()">Reset Filters</button>
+        </div>
+    </div>
+
+    <!-- Task Table -->
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>Task Name</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Assigned To</th>
+                    <th>Due Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let task of filteredTasks trackBy trackByTaskId">
+                    <td>{{ task.taskName }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="{
+                'bg-success': task.priority === 'High',
+                'bg-warning': task.priority === 'Medium',
+                'bg-secondary': task.priority === 'Low'
+              }">
+              {{ task.priority }}
+            </span>
+                    </td>
+                    <td>
+                        <span class="badge" [ngClass]="{
+                'bg-primary': task.status === 'Pending',
+                'bg-info text-dark': task.status === 'In Progress',
+                'bg-success': task.status === 'Completed'
+              }">
+              {{ task.status }}
+            </span>
+                    </td>
+                    <td>{{ task.assignedTo }}</td>
+                    <td>{{ task.dueDate | date }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info me-1" [routerLink]="'/task-details/view/' + task.id">
+              <i class="bi bi-eye"></i> View
+            </button>
+                        <button class="btn btn-sm btn-warning me-1" [routerLink]="'/edit/' + task.id">
+              <i class="bi bi-pencil"></i> Edit
+            </button>
+                        <button class="btn btn-sm btn-danger" (click)="deleteTask(task.id)">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- No Tasks Found -->
+    <div *ngIf="filteredTasks.length === 0" class="alert alert-warning text-center">
+        No tasks found.
+    </div>
+</div>
